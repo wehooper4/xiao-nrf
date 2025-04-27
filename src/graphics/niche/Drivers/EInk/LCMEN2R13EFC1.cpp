@@ -42,11 +42,10 @@ static const uint8_t LUT_FAST_BW[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, //
 };
 
-// Look up table: fash refresh, pixels which change from white to black
+// Look up table: fast refresh, pixels which change from white to black
 static const uint8_t LUT_FAST_WB[] = {
-    0x01, 0x46, 0x42, 0x01, 0x01, 0x01, 0x01, //
-    0x01, 0x46, 0x42, 0x01, 0x01, 0x01, 0x01, //
     0x01, 0x46, 0x43, 0x02, 0x01, 0x01, 0x01, //
+    0x01, 0x46, 0x42, 0x01, 0x01, 0x01, 0x01, //
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, //
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, //
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, //
@@ -55,7 +54,7 @@ static const uint8_t LUT_FAST_WB[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, //
 };
 
-// Look up table: fash refresh, pixels which remain black
+// Look up table: fast refresh, pixels which remain black
 static const uint8_t LUT_FAST_BB[] = {
     0x01, 0x06, 0x03, 0x42, 0x41, 0x01, 0x01, //
     0x01, 0x06, 0x02, 0x01, 0x01, 0x01, 0x01, //
@@ -98,6 +97,7 @@ void LCMEN213EFC1::begin(SPIClass *spi, uint8_t pin_dc, uint8_t pin_cs, uint8_t 
     reset();
 }
 
+// Display an image on the display
 void LCMEN213EFC1::update(uint8_t *imageData, UpdateTypes type)
 {
     this->updateType = type;
@@ -161,13 +161,6 @@ void LCMEN213EFC1::sendCommand(const uint8_t command)
 
 void LCMEN213EFC1::sendData(uint8_t data)
 {
-    // spi->beginTransaction(spiSettings);
-    // digitalWrite(pin_dc, HIGH); // DC pin HIGH indicates data, instead of command
-    // digitalWrite(pin_cs, LOW);
-    // spi->transfer(data);
-    // digitalWrite(pin_cs, HIGH);
-    // digitalWrite(pin_dc, HIGH);
-    // spi->endTransaction();
     sendData(&data, 1);
 }
 
